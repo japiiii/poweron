@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerOn PNG — Solar Panels, Electrical Services & Installation</title>
+<meta name="description" content="PowerOn supplies and installs solar power systems and delivers licensed electrical services across Papua New Guinea. Site assessment, supply, installation and support.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16150f;
+    --panel:#1f1d13;
+    --panel-2:#282616;
+    --bone:#f5f4ec;
+    --volt:#ffc400;
+    --volt-deep:#e0a800;
+    --moss:#234034;
+    --line:#dad7c8;
+    --mut:#6d6a59;
+    --white:#ffffff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Archivo',sans-serif;
+    background:var(--bone);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{line-height:1.05;}
+  .display{font-family:'Anton',sans-serif;font-weight:400;letter-spacing:.01em;text-transform:uppercase;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px;}
+  a{color:inherit;}
+
+  /* ---------- hazard stripe divider ---------- */
+  .hazard{
+    height:14px;
+    background:repeating-linear-gradient(-45deg,var(--volt) 0 16px,var(--ink) 16px 32px);
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:var(--bone);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px;}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .logo-mark{
+    width:34px;height:34px;background:var(--volt);
+    display:grid;place-items:center;border:2px solid var(--ink);
+  }
+  .logo-mark svg{width:18px;height:18px;}
+  .logo-text{font-family:'Anton',sans-serif;font-size:1.25rem;text-transform:uppercase;letter-spacing:.03em;}
+  .logo-text span{color:var(--volt-deep);}
+  .nav-links{display:flex;gap:28px;list-style:none;align-items:center;}
+  .nav-links a{
+    text-decoration:none;font-size:.9rem;font-weight:600;
+    padding:4px 0;border-bottom:2px solid transparent;
+  }
+  .nav-links a:hover,.nav-links a:focus-visible{border-bottom-color:var(--volt);}
+  .btn{
+    display:inline-block;text-decoration:none;font-weight:700;font-size:.9rem;
+    padding:12px 22px;border:2px solid var(--ink);
+    background:var(--volt);color:var(--ink);
+    box-shadow:4px 4px 0 var(--ink);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover,.btn:focus-visible{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink);}
+  .btn.ghost{background:transparent;color:var(--bone);border-color:var(--bone);box-shadow:4px 4px 0 rgba(245,244,236,.35);}
+  .btn.ghost:hover{box-shadow:2px 2px 0 rgba(245,244,236,.35);}
+  @media(max-width:760px){.nav-links li.hide-m{display:none;}}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:var(--ink);color:var(--bone);
+    position:relative;overflow:hidden;
+    transition:background .6s ease;
+  }
+  .hero.lit{background:var(--panel);}
+  .hero-grid{
+    display:grid;grid-template-columns:1.4fr 1fr;gap:48px;
+    padding:88px 0 96px;align-items:center;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--volt);margin-bottom:20px;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem,6.2vw,4.6rem);
+    margin-bottom:24px;
+  }
+  .hero h1 .on{
+    color:var(--volt);
+    text-shadow:0 0 0 transparent;
+    transition:text-shadow .6s ease;
+  }
+  .hero.lit h1 .on{text-shadow:0 0 34px rgba(255,196,0,.55);}
+  .hero p.lede{font-size:1.1rem;max-width:34rem;color:#cfcdbe;margin-bottom:32px;}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;}
+
+  /* the switch — signature element */
+  .switch-panel{
+    justify-self:center;
+    background:var(--panel-2);
+    border:2px solid #3a3722;
+    padding:34px 30px 26px;
+    width:min(280px,100%);
+    text-align:center;
+  }
+  .switch-label{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.16em;color:#a8a48c;text-transform:uppercase;}
+  .switch{
+    margin:20px auto;
+    width:96px;height:170px;
+    background:#12110b;border:2px solid #3a3722;
+    border-radius:8px;position:relative;cursor:pointer;
+    display:block;
+  }
+  .switch:focus-visible{outline:3px solid var(--volt);outline-offset:3px;}
+  .paddle{
+    position:absolute;left:10px;right:10px;height:74px;
+    background:linear-gradient(180deg,#4a4632,#2e2b1c);
+    border-radius:6px;border:1px solid #57523a;
+    top:80px;
+    transition:top .22s cubic-bezier(.4,1.6,.6,1), background .22s ease;
+  }
+  .hero.lit .paddle{
+    top:12px;
+    background:linear-gradient(180deg,var(--volt),var(--volt-deep));
+    border-color:var(--volt);
+    box-shadow:0 0 26px rgba(255,196,0,.5);
+  }
+  .switch-state{
+    font-family:'Anton',sans-serif;font-size:1.6rem;letter-spacing:.06em;
+    color:#57523a;transition:color .4s ease;
+  }
+  .hero.lit .switch-state{color:var(--volt);}
+  .switch-hint{font-size:.78rem;color:#807c66;margin-top:8px;}
+  @media(max-width:860px){
+    .hero-grid{grid-template-columns:1fr;padding:64px 0 72px;}
+    .switch-panel{justify-self:start;}
+  }
+
+  /* ---------- stat strip ---------- */
+  .strip{background:var(--moss);color:var(--bone);}
+  .strip-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    padding:34px 0;gap:24px;text-align:left;
+  }
+  .stat .num{font-family:'IBM Plex Mono',monospace;font-size:1.7rem;color:var(--volt);font-weight:500;}
+  .stat .lbl{font-size:.85rem;color:#c4d2c7;margin-top:2px;}
+  @media(max-width:700px){.strip-grid{grid-template-columns:1fr;gap:18px;padding:28px 0;}}
+
+  /* ---------- sections ---------- */
+  section{padding:88px 0;}
+  .sec-head{max-width:38rem;margin-bottom:52px;}
+  .sec-head .eyebrow{color:var(--moss);}
+  .sec-head h2{font-size:clamp(1.9rem,4vw,2.8rem);margin-bottom:14px;}
+  .sec-head p{color:var(--mut);}
+
+  /* services */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .card{
+    background:var(--white);border:2px solid var(--ink);
+    padding:30px 26px;display:flex;flex-direction:column;gap:14px;
+    box-shadow:6px 6px 0 var(--line);
+  }
+  .card .icon{
+    width:46px;height:46px;background:var(--volt);
+    border:2px solid var(--ink);display:grid;place-items:center;
+  }
+  .card .icon svg{width:24px;height:24px;}
+  .card h3{font-size:1.25rem;}
+  .card p{font-size:.95rem;color:var(--mut);flex:1;}
+  .card ul{list-style:none;font-size:.88rem;}
+  .card ul li{padding:7px 0;border-top:1px solid var(--line);}
+  .card ul li::before{content:"— ";color:var(--volt-deep);font-weight:700;}
+  @media(max-width:860px){.cards{grid-template-columns:1fr;}}
+
+  /* process */
+  .process{background:var(--ink);color:var(--bone);}
+  .process .sec-head .eyebrow{color:var(--volt);}
+  .process .sec-head p{color:#a8a48c;}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:#33301d;border:2px solid #33301d;}
+  .step{background:var(--panel);padding:28px 24px;}
+  .step .no{font-family:'IBM Plex Mono',monospace;color:var(--volt);font-size:.85rem;letter-spacing:.1em;}
+  .step h3{font-size:1.1rem;margin:12px 0 10px;}
+  .step p{font-size:.88rem;color:#b5b19a;}
+  @media(max-width:920px){.steps{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.steps{grid-template-columns:1fr;}}
+
+  /* why solar */
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+  .why-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+  .why-list li{padding:20px 0;border-bottom:1px solid var(--line);display:flex;gap:16px;}
+  .why-list li:first-child{border-top:2px solid var(--ink);}
+  .tick{
+    flex:none;width:26px;height:26px;margin-top:2px;
+    background:var(--moss);color:var(--bone);
+    display:grid;place-items:center;font-size:.8rem;font-weight:700;
+  }
+  .why-list h3{font-size:1.05rem;margin-bottom:4px;}
+  .why-list p{font-size:.92rem;color:var(--mut);}
+  @media(max-width:860px){.why-grid{grid-template-columns:1fr;gap:32px;}}
+
+  /* contact */
+  .contact{background:var(--volt);}
+  .contact-inner{
+    display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center;
+  }
+  .contact h2{font-size:clamp(2rem,4.5vw,3rem);margin-bottom:16px;}
+  .contact p{max-width:30rem;margin-bottom:28px;}
+  .contact-card{
+    background:var(--ink);color:var(--bone);
+    border:2px solid var(--ink);padding:32px 28px;
+    box-shadow:8px 8px 0 rgba(22,21,15,.25);
+  }
+  .contact-card .row{
+    display:flex;justify-content:space-between;gap:16px;
+    padding:12px 0;border-bottom:1px solid #33301d;
+    font-size:.92rem;flex-wrap:wrap;
+  }
+  .contact-card .row:last-child{border-bottom:none;}
+  .contact-card .k{color:#a8a48c;font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;}
+  .contact-card a{color:var(--volt);text-decoration:none;font-weight:600;}
+  .contact-card a:hover{text-decoration:underline;}
+  @media(max-width:860px){.contact-inner{grid-template-columns:1fr;}}
+
+  /* quote form — lead capture, max 3 fields */
+  .qform{display:flex;flex-direction:column;gap:14px;max-width:26rem;}
+  .qform label{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;}
+  .qform input,.qform select{
+    font-family:'Archivo',sans-serif;font-size:1rem;
+    padding:12px 14px;border:2px solid var(--ink);background:var(--white);
+    width:100%;border-radius:0;appearance:none;-webkit-appearance:none;
+  }
+  .qform input:focus-visible,.qform select:focus-visible{outline:3px solid var(--ink);outline-offset:2px;}
+  .qform button{cursor:pointer;font-family:'Archivo',sans-serif;}
+
+  .nav-links a.active{border-bottom-color:var(--volt);}
+
+  /* footer */
+  footer{background:var(--ink);color:#a8a48c;font-size:.85rem;}
+  .foot{display:flex;justify-content:space-between;align-items:center;padding:26px 0;gap:16px;flex-wrap:wrap;}
+  .foot .mono{color:var(--volt);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;animation:none !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="PowerOn home">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" fill="#16150f"/></svg>
+      </span>
+      <span class="logo-text">Power<span>On</span></span>
+    </a>
+    <ul class="nav-links">
+      <li class="hide-m"><a href="#services">Services</a></li>
+      <li class="hide-m"><a href="#process">How it works</a></li>
+      <li class="hide-m"><a href="#why">Why solar</a></li>
+      <li><a class="btn" href="#contact">Get a quote</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <div class="hero" id="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Solar &amp; Electrical — Papua New Guinea</p>
+        <h1 class="display">Flip the switch<br>on reliable <span class="on">power</span>.</h1>
+        <p class="lede">PowerOn supplies and installs solar power systems and delivers licensed electrical work for homes and businesses across PNG — from site assessment to switch-on and support.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#contact">Request a site assessment</a>
+          <a class="btn ghost" href="#services">See our services</a>
+        </div>
+      </div>
+      <div class="switch-panel">
+        <p class="switch-label">Main Supply</p>
+        <button class="switch" id="theSwitch" aria-pressed="false" aria-label="Toggle power switch">
+          <span class="paddle"></span>
+        </button>
+        <p class="switch-state" id="switchState">OFF</p>
+        <p class="switch-hint">Go on — flip it.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hazard" aria-hidden="true"></div>
+
+  <!-- STAT STRIP -->
+  <div class="strip">
+    <div class="wrap strip-grid">
+      <div class="stat"><div class="num mono">5–6 kWh/m²</div><div class="lbl">Average daily solar energy across most of PNG — among the best in the Pacific</div></div>
+      <div class="stat"><div class="num mono">24 / 7</div><div class="lbl">Power through outages with battery storage and hybrid systems</div></div>
+      <div class="stat"><div class="num mono">K0 fuel</div><div class="lbl">Cut or eliminate generator fuel and maintenance costs</div></div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">What we do</p>
+        <h2 class="display">Supply, wire, install, support.</h2>
+        <p>One team for the whole job — no juggling a supplier, a sparky, and an installer who've never met.</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#16150f" stroke-width="2"><rect x="3" y="4" width="18" height="12" rx="1"/><path d="M3 8h18M3 12h18M9 4v12M15 4v12M8 20h8M12 16v4"/></svg></div>
+          <h3>Solar Power Systems</h3>
+          <p>Quality panels, inverters, and battery storage sized to your actual load — not a one-size-fits-all kit.</p>
+          <ul>
+            <li>Grid-tied, hybrid &amp; off-grid systems</li>
+            <li>Battery storage &amp; backup</li>
+            <li>Homes, trade stores, offices &amp; remote sites</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" stroke="#16150f" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <h3>Electrical Services</h3>
+          <p>General electrical work carried out safely and to standard, for new builds, fit-outs, and fixes.</p>
+          <ul>
+            <li>Wiring, switchboards &amp; upgrades</li>
+            <li>Lighting, power points &amp; fault-finding</li>
+            <li>Commercial &amp; residential</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#16150f" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4L15 12l-3-3 2.7-2.7z"/></svg></div>
+          <h3>Installation &amp; Maintenance</h3>
+          <p>Professional installation by our own team, plus servicing to keep your system producing at full output.</p>
+          <ul>
+            <li>Rooftop &amp; ground-mount installs</li>
+            <li>System health checks &amp; panel cleaning</li>
+            <li>Repairs, upgrades &amp; expansions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">How it works</p>
+        <h2 class="display">From site visit to switch-on.</h2>
+        <p>A clear, four-step process so you know exactly what you're getting and when.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="no">STEP 01</span>
+          <h3>Site assessment</h3>
+          <p>We visit your site, measure your power usage, check the roof or ground area, and listen to what you need.</p>
+        </div>
+        <div class="step">
+          <span class="no">STEP 02</span>
+          <h3>System design &amp; quote</h3>
+          <p>You get a system designed for your load and budget, with a clear itemised quote — no surprises later.</p>
+        </div>
+        <div class="step">
+          <span class="no">STEP 03</span>
+          <h3>Installation</h3>
+          <p>Our team installs and wires the full system, tests everything, and walks you through how it works.</p>
+        </div>
+        <div class="step">
+          <span class="no">STEP 04</span>
+          <h3>Switch-on &amp; support</h3>
+          <p>Power on. We stay available for servicing, repairs, and upgrades as your needs grow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hazard" aria-hidden="true"></div>
+
+  <!-- WHY SOLAR -->
+  <section id="why">
+    <div class="wrap why-grid">
+      <div class="sec-head" style="margin-bottom:0;">
+        <p class="eyebrow">Why solar in PNG</p>
+        <h2 class="display">The sun doesn't send a bill.</h2>
+        <p>Between grid outages, rising tariffs, and the cost of running generators, solar pays for itself — and PNG has some of the best sunlight in the world to do it with.</p>
+      </div>
+      <ul class="why-list">
+        <li>
+          <span class="tick" aria-hidden="true">✓</span>
+          <div><h3>Keep running through outages</h3><p>Battery-backed systems keep lights, fridges, tills, and equipment going when the grid drops out.</p></div>
+        </li>
+        <li>
+          <span class="tick" aria-hidden="true">✓</span>
+          <div><h3>Slash generator costs</h3><p>Fuel, servicing, and downtime add up fast. Solar cuts genset run-time dramatically — or replaces it entirely.</p></div>
+        </li>
+        <li>
+          <span class="tick" aria-hidden="true">✓</span>
+          <div><h3>Power remote sites</h3><p>Off-grid systems bring reliable power to locations the grid will never reach.</p></div>
+        </li>
+        <li>
+          <span class="tick" aria-hidden="true">✓</span>
+          <div><h3>Fixed, predictable costs</h3><p>Once installed, your power comes from sunlight. Your biggest cost is behind you, not ahead of you.</p></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="wrap contact-inner">
+      <div>
+        <h2 class="display">Ready to power on?</h2>
+        <p>Tell us about your site and what you want to run. We'll come out, assess it, and give you a straight answer and a clear quote.</p>
+        <form class="qform" action="https://formsubmit.co/info@poweron.com.pg" method="POST">
+          <input type="hidden" name="_subject" value="New quote request — poweron.com.pg">
+          <input type="hidden" name="_captcha" value="false">
+          <div>
+            <label for="qname">Your name</label>
+            <input id="qname" type="text" name="name" required autocomplete="name">
+          </div>
+          <div>
+            <label for="qphone">Phone or email</label>
+            <input id="qphone" type="text" name="contact" required autocomplete="tel">
+          </div>
+          <div>
+            <label for="qneed">What do you need?</label>
+            <select id="qneed" name="service" required>
+              <option value="Solar system">Solar power system</option>
+              <option value="Electrical work">Electrical work</option>
+              <option value="Installation / maintenance">Installation / maintenance</option>
+              <option value="Not sure yet">Not sure yet — advise me</option>
+            </select>
+          </div>
+          <button class="btn" type="submit" style="background:var(--ink);color:var(--volt);box-shadow:4px 4px 0 rgba(22,21,15,.3);">Request my quote</button>
+        </form>
+      </div>
+      <div class="contact-card">
+        <div class="row"><span class="k">Phone</span><a href="tel:+675XXXXXXXX">+675 XXXX XXXX</a></div>
+        <div class="row"><span class="k">Email</span><a href="mailto:info@poweron.com.pg">info@poweron.com.pg</a></div>
+        <div class="row"><span class="k">Location</span><span>Papua New Guinea</span></div>
+        <div class="row"><span class="k">Hours</span><span>Mon–Sat, 8am–5pm</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 PowerOn. Solar &amp; electrical services, Papua New Guinea.</span>
+    <span class="mono">poweron.com.pg</span>
+  </div>
+</footer>
+
+<script>
+  const hero = document.getElementById('hero');
+  const sw = document.getElementById('theSwitch');
+  const state = document.getElementById('switchState');
+
+  function setLit(on){
+    hero.classList.toggle('lit', on);
+    sw.setAttribute('aria-pressed', String(on));
+    state.textContent = on ? 'ON' : 'OFF';
+  }
+
+  sw.addEventListener('click', () => setLit(!hero.classList.contains('lit')));
+
+  // Active nav state (UX: indicate current section)
+  const navMap = {};
+  document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    if (id) navMap[id] = a;
+  });
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = navMap[e.target.id];
+      if (link) link.classList.toggle('active', e.isIntersecting);
+    });
+  }, { rootMargin: '-40% 0px -50% 0px' });
+  ['services','process','why','contact'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) obs.observe(el);
+  });
+
+  // Auto flip-on shortly after load (respects reduced motion)
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setTimeout(() => setLit(true), 900);
+  } else {
+    setLit(true);
+  }
+</script>
+
+</body>
+</html>
