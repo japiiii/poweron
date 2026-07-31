@@ -3,22 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PowerOn Ltd — Empowering PNG to Power our Future</title>
-<meta name="description" content="PowerOn Ltd is a PNG-owned renewable energy company delivering solar home systems, institutional power, hybrid BESS systems and mini-grids across Papua New Guinea.">
+<title>PowerOn Ltd — Empowering PNG to Power Our Future</title>
+<meta name="description" content="PowerOn Ltd delivers end-to-end renewable energy solutions across Papua New Guinea — solar, battery storage and hybrid energy systems for communities, businesses and institutions.">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:title" content="PowerOn Ltd — Empowering PNG to Power Our Future">
+<meta property="og:description" content="End-to-end renewable energy solutions across Papua New Guinea.">
+<meta property="og:image" content="assets/logo-full.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#12130f;
+    --night:#0b1220;
     --panel:#1b1d17;
-    --panel-2:#23261d;
     --bone:#f5f4ec;
     --volt:#ffc400;
     --volt-deep:#e0a800;
     --teal:#19a89d;
     --teal-deep:#0f7f77;
-    --cell:#173a4a;        /* solar cell blue */
+    --cell:#173a4a;
     --cell-lit:#1e5d73;
     --line:#dad7c8;
     --mut:#6d6a59;
@@ -52,28 +57,28 @@
   .btn.ghost:hover{box-shadow:2px 2px 0 rgba(245,244,236,.35);}
   @media(max-width:760px){.nav-links li.hide-m{display:none;}}
 
-  /* ---------- hero ---------- */
-  .hero{background:var(--ink);color:var(--bone);position:relative;overflow:hidden;transition:background .8s ease;}
+  /* ---------- hero (day/night) ---------- */
+  .hero{background:var(--night);color:var(--bone);position:relative;overflow:hidden;transition:background 1s ease;}
   .hero.lit{background:linear-gradient(180deg,#101a1e 0%, #16130a 100%);}
   .hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;padding:76px 0 0;align-items:center;position:relative;z-index:2;}
   .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--volt);margin-bottom:20px;}
-  .hero h1{font-size:clamp(2.4rem,5.6vw,4.2rem);margin-bottom:22px;}
+  .hero h1{font-size:clamp(2.3rem,5.4vw,4rem);margin-bottom:18px;}
   .hero h1 .on{color:var(--volt);transition:text-shadow .8s ease;}
   .hero.lit h1 .on{text-shadow:0 0 34px rgba(255,196,0,.55);}
-  .hero p.lede{font-size:1.08rem;max-width:33rem;color:#cfcdbe;margin-bottom:30px;}
+  .hero .sub{font-family:'IBM Plex Mono',monospace;font-size:.85rem;letter-spacing:.06em;color:var(--teal);margin-bottom:18px;text-transform:uppercase;}
+  .hero p.lede{font-size:1.06rem;max-width:33rem;color:#cfcdbe;margin-bottom:30px;}
   .hero-cta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:28px;}
 
-  /* switch, now compact beside CTA */
   .switch-inline{display:flex;align-items:center;gap:16px;margin-bottom:40px;}
   .switch{width:64px;height:112px;background:#0d0f0c;border:2px solid #3a3e2f;border-radius:6px;position:relative;cursor:pointer;flex:none;}
   .switch:focus-visible{outline:3px solid var(--volt);outline-offset:3px;}
-  .paddle{position:absolute;left:7px;right:7px;height:48px;background:linear-gradient(180deg,#4a4632,#2e2b1c);border-radius:4px;border:1px solid #57523a;top:54px;transition:top .22s cubic-bezier(.4,1.6,.6,1), background .22s ease;}
+  .paddle{position:absolute;left:7px;right:7px;height:48px;background:linear-gradient(180deg,#3d4a63,#232c3f);border-radius:4px;border:1px solid #4a5a7a;top:54px;transition:top .22s cubic-bezier(.4,1.6,.6,1), background .3s ease;}
   .hero.lit .paddle{top:8px;background:linear-gradient(180deg,var(--volt),var(--volt-deep));border-color:var(--volt);box-shadow:0 0 22px rgba(255,196,0,.5);}
-  .switch-copy .st{font-family:'Anton',sans-serif;font-size:1.15rem;letter-spacing:.05em;color:#57523a;transition:color .5s ease;}
+  .switch-copy .st{font-family:'Anton',sans-serif;font-size:1.05rem;letter-spacing:.05em;color:#7f9cc9;transition:color .5s ease;}
   .hero.lit .switch-copy .st{color:var(--volt);}
   .switch-copy .hint{font-size:.8rem;color:#807c66;}
 
-  /* ---------- solar array scene ---------- */
+  /* ---------- solar scene: day & night ---------- */
   .solar-scene{position:relative;align-self:end;}
   .solar-scene svg{display:block;width:100%;height:auto;}
   .sun{opacity:0;transform:translateY(26px);transition:opacity 1s ease, transform 1.4s ease;}
@@ -81,30 +86,48 @@
   .rays{opacity:0;transition:opacity 1.2s ease .3s;transform-origin:150px 96px;}
   .hero.lit .rays{opacity:.9;animation:spin 60s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
-  .pcell{fill:var(--cell);stroke:#0c2531;stroke-width:1;transition:fill .5s ease;}
+  .moon,.stars{opacity:1;transition:opacity .8s ease;}
+  .hero.lit .moon,.hero.lit .stars{opacity:0;}
+  .stars circle{animation:twinkle 3s ease-in-out infinite;}
+  .stars circle:nth-child(2n){animation-delay:1.2s;}
+  .stars circle:nth-child(3n){animation-delay:2s;}
+  @keyframes twinkle{0%,100%{opacity:.9;}50%{opacity:.25;}}
+  .pcell{fill:#101d26;stroke:#0a161d;stroke-width:1;transition:fill .5s ease;transition-delay:calc(var(--d,0)*60ms);}
   .hero.lit .pcell{fill:var(--cell-lit);}
   .hero.lit .pcell.glint{fill:var(--teal);}
   .hero.lit .pcell.hot{fill:var(--volt);}
-  .pcell{transition-delay:calc(var(--d,0)*60ms);}
-  .pulse-line{stroke:var(--volt);stroke-width:2.5;fill:none;stroke-dasharray:8 10;opacity:0;transition:opacity .6s ease .8s;}
-  .hero.lit .pulse-line{opacity:1;animation:flow 1.2s linear infinite;}
+  /* energy flows */
+  .flow{stroke-width:2.5;fill:none;stroke-dasharray:8 10;transition:opacity .6s ease;}
+  .flow-solar{stroke:var(--volt);opacity:0;}
+  .hero.lit .flow-solar{opacity:1;animation:flow 1.2s linear infinite;}
+  .flow-batt{stroke:var(--teal);opacity:1;animation:flow 1.6s linear infinite;}
+  .hero.lit .flow-batt{opacity:0;}
   @keyframes flow{to{stroke-dashoffset:-18;}}
-  .bulb-glow{opacity:0;transition:opacity .8s ease 1.2s;}
-  .hero.lit .bulb-glow{opacity:1;}
+  /* battery */
+  .batt-level{transition:width 1s ease .4s, fill .6s ease;}
+  .batt-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;}
+  /* house light: on at night (battery), off during day (sun's out) */
+  .bulb-glow{opacity:1;transition:opacity .8s ease;}
+  .hero.lit .bulb-glow{opacity:0;}
+  .win{fill:#ffc400;transition:fill .8s ease;}
+  .hero.lit .win{fill:#dad7c8;}
+  .scene-caption{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#7f9cc9;transition:color .6s ease;}
+  .hero.lit .scene-caption{color:#a8a48c;}
   @media(max-width:880px){
     .hero-grid{grid-template-columns:1fr;padding-top:60px;}
-    .solar-scene{max-width:460px;}
+    .solar-scene{max-width:480px;}
   }
 
   /* ---------- stat strip ---------- */
   .strip{background:var(--teal-deep);color:var(--bone);}
-  .strip-grid{display:grid;grid-template-columns:repeat(3,1fr);padding:34px 0;gap:24px;}
-  .stat .num{font-family:'IBM Plex Mono',monospace;font-size:1.7rem;color:var(--volt);font-weight:500;}
-  .stat .lbl{font-size:.85rem;color:#d2ece9;margin-top:2px;}
-  @media(max-width:700px){.strip-grid{grid-template-columns:1fr;gap:18px;padding:28px 0;}}
+  .strip-grid{display:grid;grid-template-columns:repeat(4,1fr);padding:34px 0;gap:24px;}
+  .stat .num{font-family:'IBM Plex Mono',monospace;font-size:1.45rem;color:var(--volt);font-weight:500;}
+  .stat .lbl{font-size:.84rem;color:#d2ece9;margin-top:2px;}
+  @media(max-width:900px){.strip-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.strip-grid{grid-template-columns:1fr;gap:18px;padding:28px 0;}}
 
   section{padding:88px 0;}
-  .sec-head{max-width:40rem;margin-bottom:52px;}
+  .sec-head{max-width:42rem;margin-bottom:52px;}
   .sec-head .eyebrow{color:var(--teal-deep);}
   .sec-head h2{font-size:clamp(1.9rem,4vw,2.8rem);margin-bottom:14px;}
   .sec-head p{color:var(--mut);}
@@ -115,24 +138,25 @@
   .card .icon{width:46px;height:46px;background:var(--volt);border:2px solid var(--ink);display:grid;place-items:center;}
   .card .icon svg{width:24px;height:24px;}
   .card.teal .icon{background:var(--teal);}
-  .card h3{font-size:1.15rem;}
+  .card h3{font-size:1.12rem;}
   .card p{font-size:.93rem;color:var(--mut);flex:1;}
   @media(max-width:880px){.cards{grid-template-columns:1fr 1fr;}}
   @media(max-width:600px){.cards{grid-template-columns:1fr;}}
 
-  /* process */
+  /* process — now 5 steps */
   .process{background:var(--ink);color:var(--bone);}
   .process .sec-head .eyebrow{color:var(--volt);}
   .process .sec-head p{color:#a8a48c;}
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:#33362a;border:2px solid #33362a;}
-  .step{background:var(--panel);padding:28px 24px;}
-  .step .no{font-family:'IBM Plex Mono',monospace;color:var(--volt);font-size:.85rem;letter-spacing:.1em;}
-  .step h3{font-size:1.08rem;margin:12px 0 10px;}
-  .step p{font-size:.88rem;color:#b5b19a;}
-  @media(max-width:920px){.steps{grid-template-columns:repeat(2,1fr);}}
-  @media(max-width:560px){.steps{grid-template-columns:1fr;}}
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:#33362a;border:2px solid #33362a;}
+  .step{background:var(--panel);padding:26px 20px;}
+  .step .no{font-family:'IBM Plex Mono',monospace;color:var(--volt);font-size:.82rem;letter-spacing:.1em;}
+  .step h3{font-size:1rem;margin:12px 0 10px;}
+  .step p{font-size:.85rem;color:#b5b19a;}
+  @media(max-width:1000px){.steps{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:700px){.steps{grid-template-columns:1fr 1fr;}}
+  @media(max-width:480px){.steps{grid-template-columns:1fr;}}
 
-  /* why */
+  /* why + currently delivering */
   .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
   .why-list{list-style:none;}
   .why-list li{padding:20px 0;border-bottom:1px solid var(--line);display:flex;gap:16px;}
@@ -140,20 +164,34 @@
   .tick{flex:none;width:26px;height:26px;margin-top:2px;background:var(--teal-deep);color:var(--bone);display:grid;place-items:center;font-size:.8rem;font-weight:700;}
   .why-list h3{font-size:1.02rem;margin-bottom:4px;}
   .why-list p{font-size:.92rem;color:var(--mut);}
+  .delivering{
+    margin-top:28px;background:var(--ink);color:var(--bone);
+    border:2px solid var(--ink);padding:24px 26px;box-shadow:6px 6px 0 var(--volt);
+  }
+  .delivering .k{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--volt);}
+  .delivering .big{font-family:'Anton',sans-serif;font-size:2rem;margin:6px 0 4px;}
+  .delivering p{font-size:.9rem;color:#b5b19a;}
   @media(max-width:860px){.why-grid{grid-template-columns:1fr;gap:32px;}}
 
-  /* locations + partners */
+  /* locations + partners + profile */
   .ops{background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .ops-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
-  .loc{display:flex;flex-direction:column;gap:0;}
-  .loc .row{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);}
-  .loc .row .pin{flex:none;width:26px;height:26px;background:var(--volt);border:2px solid var(--ink);display:grid;place-items:center;}
-  .loc .row .pin svg{width:14px;height:14px;}
-  .loc h3{font-size:1rem;}
-  .loc p{font-size:.88rem;color:var(--mut);}
+  .map-frame{border:2px solid var(--ink);box-shadow:6px 6px 0 var(--line);width:100%;height:280px;}
+  .map-frame iframe{width:100%;height:100%;border:0;display:block;}
+  .loc-note{font-size:.92rem;color:var(--mut);margin-top:16px;}
   .partners{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;}
+  .pchip{border:1.5px solid var(--ink);background:#fff;padding:8px 14px;display:inline-flex;align-items:center;}
+  .pchip img{height:28px;width:auto;display:block;max-width:130px;object-fit:contain;}
   .chip{font-family:'IBM Plex Mono',monospace;font-size:.78rem;padding:8px 14px;border:1.5px solid var(--ink);background:var(--bone);}
-  .creds{margin-top:24px;font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--mut);line-height:1.9;}
+  .btn.small{padding:10px 16px;font-size:.84rem;}
+  .btn.dark{background:var(--ink);color:var(--volt);}
+  .profile-box{margin-top:28px;border:2px solid var(--ink);background:var(--bone);padding:22px 24px;box-shadow:6px 6px 0 var(--teal);}
+  .profile-box h3{font-size:1.05rem;margin-bottom:6px;}
+  .profile-box p{font-size:.9rem;color:var(--mut);margin-bottom:16px;}
+  .profile-box .btns{display:flex;gap:12px;flex-wrap:wrap;}
+  .profile-box .qr-wrap{display:flex;align-items:center;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);}
+  .profile-box .qr-wrap img{width:80px;height:80px;border:2px solid var(--ink);flex:none;}
+  .profile-box .qr-hint{font-family:'IBM Plex Mono',monospace;font-size:.72rem;line-height:1.6;letter-spacing:.06em;color:var(--mut);}
   @media(max-width:860px){.ops-grid{grid-template-columns:1fr;gap:36px;}}
 
   /* contact */
@@ -173,9 +211,36 @@
   .qform input:focus-visible,.qform select:focus-visible{outline:3px solid var(--ink);outline-offset:2px;}
   @media(max-width:860px){.contact-inner{grid-template-columns:1fr;}}
 
+  /* projects */
+  .projects{background:var(--white);border-top:1px solid var(--line);}
+  .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .proj{border:2px solid var(--ink);background:var(--bone);padding:24px 22px;display:flex;flex-direction:column;gap:10px;box-shadow:6px 6px 0 var(--line);}
+  .proj .tag{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-deep);}
+  .proj h3{font-size:1.05rem;}
+  .proj .spec{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--ink);background:var(--volt);display:inline-block;padding:3px 8px;border:1.5px solid var(--ink);align-self:flex-start;}
+  .proj p{font-size:.88rem;color:var(--mut);flex:1;}
+  .proj .loc2{font-size:.8rem;color:var(--mut);font-family:'IBM Plex Mono',monospace;}
+  .footprint{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px;}
+  @media(max-width:880px){.proj-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:600px){.proj-grid{grid-template-columns:1fr;}}
+
+  /* team */
+  .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .tcard{border:2px solid var(--ink);background:var(--white);box-shadow:6px 6px 0 var(--line);overflow:hidden;display:flex;flex-direction:column;}
+  .tcard img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center top;display:block;border-bottom:2px solid var(--ink);}
+  .tcard .tc-body{padding:18px 20px 22px;}
+  .tcard h3{font-size:1.1rem;}
+  .tcard .role{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin:4px 0 10px;}
+  .tcard p{font-size:.87rem;color:var(--mut);}
+  .eng-partner{margin-top:32px;border:2px solid var(--ink);background:var(--white);padding:20px 24px;box-shadow:6px 6px 0 var(--teal);font-size:.92rem;color:var(--mut);}
+  .eng-partner strong{color:var(--ink);}
+  @media(max-width:880px){.team-grid{grid-template-columns:1fr;}}
+
   footer{background:var(--ink);color:#a8a48c;font-size:.85rem;}
   .foot{display:flex;justify-content:space-between;align-items:center;padding:26px 0;gap:16px;flex-wrap:wrap;}
   .foot .mono{color:var(--volt);}
+  .foot a{color:#dad7c8;text-decoration:none;}
+  .foot a:hover{color:var(--volt);}
 
   @media (prefers-reduced-motion: reduce){
     *{transition:none !important;animation:none !important;}
@@ -189,10 +254,7 @@
   <div class="wrap nav">
     <a class="logo" href="#top" aria-label="PowerOn Ltd home">
       <span class="logo-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="9" stroke="#19a89d" stroke-width="2.2" stroke-dasharray="40 8" stroke-linecap="round" transform="rotate(-70 12 12)"/>
-          <path d="M13 5 8.5 13h3l-1 6 4.8-8.4h-3L13 5z" fill="#ffc400"/>
-        </svg>
+        <img src="assets/logo-icon.png" alt="" width="30" height="30" style="display:block;object-fit:contain;">
       </span>
       <span class="logo-text">Power<span>On</span></span>
     </a>
@@ -200,7 +262,8 @@
       <li class="hide-m"><a href="#services">Solutions</a></li>
       <li class="hide-m"><a href="#process">How it works</a></li>
       <li class="hide-m"><a href="#why">Why PowerOn</a></li>
-      <li class="hide-m"><a href="#operations">Locations</a></li>
+      <li class="hide-m"><a href="#projects">Projects</a></li>
+      <li class="hide-m"><a href="#operations">Location</a></li>
       <li><a class="btn" href="#contact">Get a quote</a></li>
     </ul>
   </div>
@@ -212,28 +275,40 @@
   <div class="hero" id="hero">
     <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow">PNG-Owned Renewable Energy Company</p>
+        <p class="eyebrow">Renewable Energy Solutions — Papua New Guinea</p>
         <h1 class="display">Empowering PNG<br>to power <span class="on">our future</span>.</h1>
-        <p class="lede">PowerOn Ltd delivers clean, reliable and sustainable solar energy — from solar home systems and hybrid battery storage to mini-grids that electrify entire communities. NEA-approved, certified products, installed by our own qualified team.</p>
+        <p class="sub">Local Leadership. Proven Experience.</p>
+        <p class="lede">PowerOn delivers end-to-end renewable energy solutions across Papua New Guinea, supporting communities, businesses and institutions with reliable solar, battery storage and hybrid energy systems.</p>
         <div class="hero-cta">
           <a class="btn" href="#contact">Request a site assessment</a>
           <a class="btn ghost" href="#services">Our solutions</a>
         </div>
         <div class="switch-inline">
-          <button class="switch" id="theSwitch" aria-pressed="false" aria-label="Toggle power switch">
+          <button class="switch" id="theSwitch" aria-pressed="false" aria-label="Toggle between solar day mode and battery night mode">
             <span class="paddle"></span>
           </button>
           <div class="switch-copy">
-            <div class="st" id="switchState">OFF</div>
-            <div class="hint">Go on — flip it.</div>
+            <div class="st" id="switchState">NIGHT — ON BATTERY</div>
+            <div class="hint">Flip it. Solar by day, battery by night.</div>
           </div>
         </div>
       </div>
 
-      <!-- SOLAR ARRAY SCENE -->
+      <!-- SOLAR + BATTERY SCENE -->
       <div class="solar-scene" aria-hidden="true">
-        <svg viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg">
-          <!-- sun + rays -->
+        <svg viewBox="0 0 560 440" xmlns="http://www.w3.org/2000/svg">
+          <!-- night sky -->
+          <g class="stars" fill="#dae6ff">
+            <circle cx="60" cy="40" r="2"/><circle cx="240" cy="26" r="1.6"/><circle cx="330" cy="60" r="2"/>
+            <circle cx="430" cy="30" r="1.6"/><circle cx="500" cy="70" r="2"/><circle cx="90" cy="120" r="1.6"/>
+            <circle cx="280" cy="100" r="1.4"/><circle cx="380" cy="120" r="1.8"/>
+          </g>
+          <g class="moon">
+            <circle cx="150" cy="96" r="34" fill="#dae6ff"/>
+            <circle cx="163" cy="88" r="30" fill="#0b1220"/>
+          </g>
+
+          <!-- day sun + rays -->
           <g class="rays" stroke="#ffc400" stroke-width="3" stroke-linecap="round">
             <line x1="150" y1="18" x2="150" y2="42"/><line x1="150" y1="150" x2="150" y2="174"/>
             <line x1="72" y1="96" x2="96" y2="96"/><line x1="204" y1="96" x2="228" y2="96"/>
@@ -245,22 +320,32 @@
             <circle cx="150" cy="96" r="42" fill="none" stroke="#e0a800" stroke-width="3"/>
           </g>
 
-          <!-- ground line -->
+          <!-- ground -->
           <line x1="20" y1="392" x2="545" y2="392" stroke="#3a3e2f" stroke-width="3"/>
 
-          <!-- solar panel: tilted array built from cells -->
-          <g id="panelCells" transform="translate(180,150) skewX(-14)">
-            <!-- frame -->
+          <!-- panel -->
+          <g id="panelCells" transform="translate(180,140) skewX(-14)">
             <rect x="-8" y="-8" width="336" height="216" fill="#0c1116" stroke="#3a3e2f" stroke-width="3"/>
           </g>
-          <!-- legs -->
-          <line x1="245" y1="352" x2="265" y2="392" stroke="#3a3e2f" stroke-width="7"/>
-          <line x1="435" y1="352" x2="455" y2="392" stroke="#3a3e2f" stroke-width="7"/>
+          <line x1="245" y1="342" x2="265" y2="392" stroke="#3a3e2f" stroke-width="7"/>
+          <line x1="435" y1="342" x2="455" y2="392" stroke="#3a3e2f" stroke-width="7"/>
 
-          <!-- cable from panel to house -->
-          <path class="pulse-line" d="M 460 300 C 510 320, 520 350, 512 392"/>
+          <!-- battery (BESS) -->
+          <g transform="translate(300,352)">
+            <rect x="0" y="0" width="86" height="40" fill="#0c1116" stroke="#dad7c8" stroke-width="3"/>
+            <rect x="86" y="12" width="8" height="16" fill="#dad7c8"/>
+            <rect id="battLevel" class="batt-level" x="6" y="6" width="56" height="28" fill="#19a89d"/>
+            <text class="batt-label" x="43" y="60" text-anchor="middle" fill="#7f9cc9">BESS</text>
+          </g>
 
-          <!-- little house with bulb glow -->
+          <!-- flows -->
+          <!-- day: panel -> battery, panel -> house -->
+          <path class="flow flow-solar" d="M 300 290 C 310 320, 330 335, 342 350"/>
+          <path class="flow flow-solar" d="M 440 300 C 495 320, 512 350, 510 372"/>
+          <!-- night: battery -> house -->
+          <path class="flow flow-batt" d="M 388 372 C 430 372, 470 375, 496 380"/>
+
+          <!-- house: glow ALWAYS on -->
           <g transform="translate(482,330)">
             <g class="bulb-glow">
               <circle cx="30" cy="18" r="26" fill="#ffc400" opacity="0.18"/>
@@ -268,9 +353,10 @@
             </g>
             <path d="M6 34 30 12 54 34" stroke="#dad7c8" stroke-width="4" fill="none" stroke-linejoin="round"/>
             <rect x="12" y="34" width="36" height="28" fill="none" stroke="#dad7c8" stroke-width="4"/>
-            <rect x="25" y="44" width="10" height="18" fill="#dad7c8"/>
+            <rect class="win" x="25" y="44" width="10" height="18"/>
           </g>
         </svg>
+        <p class="scene-caption" id="sceneCaption">Night: battery backup keeps the lights on</p>
       </div>
     </div>
   </div>
@@ -280,9 +366,10 @@
   <!-- STAT STRIP -->
   <div class="strip">
     <div class="wrap strip-grid">
-      <div class="stat"><div class="num mono">85%</div><div class="lbl">of PNG's population lacks reliable electricity — PowerOn exists to close that gap</div></div>
-      <div class="stat"><div class="num mono">NEA</div><div class="lbl">approved systems, designed and commissioned to national regulations and international safety standards</div></div>
-      <div class="stat"><div class="num mono">3 HUBS</div><div class="lbl">Port Moresby, Lae &amp; Goroka — strategically located for installation and after-sales support</div></div>
+      <div class="stat"><div class="num mono">30+ YRS</div><div class="lbl">Combined industry experience across our leadership and technical team</div></div>
+      <div class="stat"><div class="num mono">A GRADE</div><div class="lbl">Licensed Electrical Contractor</div></div>
+      <div class="stat"><div class="num mono">NATIONWIDE</div><div class="lbl">Project delivery across Papua New Guinea</div></div>
+      <div class="stat"><div class="num mono">END-TO-END</div><div class="lbl">Full life-cycle project management, from assessment to ongoing support</div></div>
     </div>
   </div>
 
@@ -297,33 +384,33 @@
       <div class="cards">
         <div class="card">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#12130f" stroke-width="2"><path d="M4 12 12 4l8 8"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></svg></div>
-          <h3>Solar Home Systems</h3>
-          <p>Affordable, reliable solar power for individual households — lights, phone charging, and appliances, on or off the grid.</p>
+          <h3>Infrastructure &amp; Community Solutions</h3>
+          <p>Renewable energy for communities and public infrastructure — solar home systems, solar streetlighting, solar-powered WASH solutions, and productive use energy systems.</p>
         </div>
         <div class="card teal">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#12130f" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M4 9h16M4 15h16M9 3v18M15 3v18"/></svg></div>
           <h3>Institutional Power</h3>
-          <p>Customised solar solutions for schools, hospitals, and government facilities where reliable power saves lives and enables learning.</p>
+          <p>Reliable solar and battery solutions for schools, hospitals, government facilities, utilities and commercial institutions.</p>
         </div>
         <div class="card">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#12130f" stroke-width="2"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-5h6v5"/><circle cx="12" cy="11" r="2"/></svg></div>
           <h3>SME &amp; Tourism Energy</h3>
-          <p>Renewable energy for trade stores, small businesses, lodges and tourism operators — cut costs and keep trading through outages.</p>
+          <p>Renewable energy solutions helping businesses reduce operating costs, improve energy reliability and strengthen operational resilience.</p>
         </div>
         <div class="card teal">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#12130f" stroke-width="2"><rect x="3" y="8" width="14" height="10" rx="1"/><path d="M17 11h3v4h-3"/><path d="M7 11v4M11 11v4"/></svg></div>
           <h3>Backup &amp; Hybrid BESS</h3>
-          <p>Battery energy storage systems combining solar, batteries and generators — 24/7 power through blackouts and unstable voltage.</p>
+          <p>Hybrid solar and battery storage systems providing reliable backup power, improved power quality and enhanced energy resilience.</p>
         </div>
         <div class="card">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#12130f" stroke-width="2"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><circle cx="12" cy="12" r="2.5"/><path d="M8 7.5 10.2 10M16 7.5 13.8 10M8 16.5l2.2-2.5M16 16.5 13.8 14"/></svg></div>
           <h3>Mini-Grids</h3>
-          <p>Decentralised power grids that electrify entire remote communities — designed, permitted, installed and maintained by PowerOn.</p>
+          <p>Decentralised power grids that electrify entire remote communities — designed, installed and commissioned by PowerOn.</p>
         </div>
         <div class="card teal">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#12130f" stroke-width="2" stroke-linecap="round"><path d="M12 3 4 6v6c0 5 3.4 7.7 8 9 4.6-1.3 8-4 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></svg></div>
           <h3>Quality &amp; Compliance</h3>
-          <p>Every product is certified and compliant with industry standards — internationally certified equipment backed by real warranties.</p>
+          <p>Tier-1 technology backed by genuine manufacturer warranties, recognised engineering standards and professional installation practices.</p>
         </div>
       </div>
     </div>
@@ -333,30 +420,35 @@
   <section class="process" id="process">
     <div class="wrap">
       <div class="sec-head">
-        <p class="eyebrow">How it works</p>
-        <h2 class="display">From site visit to switch-on.</h2>
-        <p>Our technicians handle the whole journey — pre-feasibility assessment, design, permits, installation, and maintenance.</p>
+        <p class="eyebrow">How it works — Full Life-Cycle Project Management</p>
+        <h2 class="display">From site visit to switch-on, and beyond.</h2>
+        <p>Our team manages the entire project life cycle — so you deal with one accountable partner from first assessment to long-term operations.</p>
       </div>
       <div class="steps">
         <div class="step">
           <span class="no">STEP 01</span>
-          <h3>Assessment</h3>
-          <p>Pre-feasibility site assessment: we measure your load, check the site, and understand what you need to power.</p>
+          <h3>Site Assessment</h3>
+          <p>We visit your site, measure your load, and understand what you need to power.</p>
         </div>
         <div class="step">
           <span class="no">STEP 02</span>
-          <h3>Design &amp; permits</h3>
-          <p>Engineers design a compliant system for your load and budget, and we handle NEA permits and approvals.</p>
+          <h3>System Design &amp; Engineering</h3>
+          <p>Engineers design a compliant system tailored to your load, site and budget.</p>
         </div>
         <div class="step">
           <span class="no">STEP 03</span>
-          <h3>Installation</h3>
-          <p>Certified technicians install and commission the system to national regulations and international safety standards.</p>
+          <h3>Procurement &amp; Delivery</h3>
+          <p>Tier-1 certified equipment procured and delivered to your site, anywhere in PNG.</p>
         </div>
         <div class="step">
           <span class="no">STEP 04</span>
-          <h3>Support</h3>
-          <p>After-sales service, maintenance, remote support, and community training — we stay with you long after switch-on.</p>
+          <h3>Installation &amp; Commissioning</h3>
+          <p>Certified technicians install and commission to national and international standards.</p>
+        </div>
+        <div class="step">
+          <span class="no">STEP 05</span>
+          <h3>Operations, Maintenance &amp; Support</h3>
+          <p>After-sales service, maintenance, remote support and training — long after switch-on.</p>
         </div>
       </div>
     </div>
@@ -367,74 +459,176 @@
   <!-- WHY POWERON -->
   <section id="why">
     <div class="wrap why-grid">
-      <div class="sec-head" style="margin-bottom:0;">
-        <p class="eyebrow">Our point of difference</p>
-        <h2 class="display">The sun doesn't send a bill.</h2>
-        <p>Diesel is expensive and unsustainable — rising fuel prices, transport costs and constant maintenance. PNG has world-class sunlight; PowerOn turns it into reliable power, done properly.</p>
+      <div>
+        <div class="sec-head" style="margin-bottom:24px;">
+          <p class="eyebrow">Why PowerOn</p>
+          <h2 class="display">The sun doesn't send a bill.</h2>
+          <p>Diesel is expensive and unsustainable — rising fuel prices, transport costs and constant maintenance. PNG has world-class sunlight; PowerOn turns it into reliable power, done properly.</p>
+        </div>
+        <div class="delivering">
+          <span class="k">Currently Delivering</span>
+          <div class="big">5 Awarded Projects</div>
+          <p>1 Rural Electrification Project &amp; 4 Commercial On-Grid Solar Projects — under way across Papua New Guinea. <a href="#projects" style="color:var(--volt);font-weight:600;">See the projects ↓</a></p>
+        </div>
       </div>
       <ul class="why-list">
         <li>
           <span class="tick" aria-hidden="true">✓</span>
-          <div><h3>Certified products, real warranties</h3><p>Internationally certified equipment from Tier-1 partners — not the low-cost imports that fail in a wet season.</p></div>
+          <div><h3>End-to-End Project Management</h3><p>One accountable partner across the full project life cycle — assessment, engineering, procurement, installation and support.</p></div>
         </li>
         <li>
           <span class="tick" aria-hidden="true">✓</span>
-          <div><h3>Certified technicians &amp; engineers</h3><p>Renewable energy technicians, certified electrical contractors, and recognised electrical and structural engineers on every project.</p></div>
+          <div><h3>Tailored Engineering Solutions</h3><p>Systems designed by recognised electrical and structural engineers for your specific load, site and conditions.</p></div>
         </li>
         <li>
           <span class="tick" aria-hidden="true">✓</span>
-          <div><h3>Flexible financing options</h3><p>We make renewable energy accessible with financing built for PNG households and businesses.</p></div>
+          <div><h3>Trusted Technology Partners</h3><p>Tier-1 certified equipment with genuine manufacturer warranties — not low-cost imports that fail in a wet season.</p></div>
         </li>
         <li>
           <span class="tick" aria-hidden="true">✓</span>
-          <div><h3>Community-led, PNG-owned</h3><p>Community-led design, local training and job creation — aligned with PNG's national development goals and the UN SDGs.</p></div>
+          <div><h3>Long-Term Support &amp; Pay-As-You-Go</h3><p>Ongoing maintenance and remote support, with Pay-As-You-Go solutions that make renewable energy accessible.</p></div>
         </li>
       </ul>
     </div>
   </section>
 
-  <!-- OPERATIONS + PARTNERS -->
+  <!-- AWARDED PROJECTS -->
+  <section class="projects" id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Awarded Projects</p>
+        <h2 class="display">Proven in the field.</h2>
+        <p>Five awarded projects currently in delivery — from island school electrification to commercial hybrid solar across four provinces.</p>
+      </div>
+      <div class="proj-grid">
+        <div class="proj" style="grid-column:span 1;">
+          <span class="tag">Education &amp; Community</span>
+          <h3>Sumkar DDA Schools Electrification Programme</h3>
+          <span class="spec">8 SCHOOLS · 8kW PV+BESS EACH</span>
+          <p>Solar and battery systems for school administration, solar home systems for teachers' housing, and solar street lighting — improving learning environments for 3,000+ students, 80+ teachers and 30+ communities.</p>
+          <span class="loc2">Karkar Island, Madang · 2026</span>
+        </div>
+        <div class="proj">
+          <span class="tag">Commercial</span>
+          <h3>Pacific Racing Headquarters</h3>
+          <span class="spec">200kW PV · 416kWh BESS</span>
+          <p>Hybrid solar and battery energy storage delivering a 50%+ reduction in diesel use, lower operating costs and reliable power through outages.</p>
+          <span class="loc2">Port Moresby, NCD · 2026</span>
+        </div>
+        <div class="proj">
+          <span class="tag">Commercial</span>
+          <h3>Pacific Racing — Wewak</h3>
+          <span class="spec">50kW PV · 60kWh BESS</span>
+          <p>Hybrid solar with battery storage for uninterrupted, reliable power, reduced fuel use and improved business continuity.</p>
+          <span class="loc2">Wewak, East Sepik · 2026</span>
+        </div>
+        <div class="proj">
+          <span class="tag">Commercial</span>
+          <h3>Pacific Racing Lahanis — Goroka</h3>
+          <span class="spec">50kW PV · 60kWh BESS</span>
+          <p>Reliable backup power for operations with lower operating costs in the Eastern Highlands.</p>
+          <span class="loc2">Goroka, Eastern Highlands · 2026</span>
+        </div>
+        <div class="proj">
+          <span class="tag">Commercial</span>
+          <h3>Centerpoint Betting — Goroka</h3>
+          <span class="spec">50kW PV · 60kWh BESS</span>
+          <p>Hybrid solar and storage providing reliable power through outages, improved business continuity and reduced generator reliance.</p>
+          <span class="loc2">Goroka, Eastern Highlands · 2026</span>
+        </div>
+        <div class="proj" style="background:var(--ink);color:var(--bone);">
+          <span class="tag" style="color:var(--volt);">Project Footprint</span>
+          <h3 style="color:var(--bone);">Four provinces and growing</h3>
+          <p style="color:#b5b19a;">Delivering renewable energy solutions across Papua New Guinea — NCD, Madang, East Sepik and Eastern Highlands.</p>
+          <span class="loc2" style="color:var(--volt);">NCD · MADANG · EAST SEPIK · E. HIGHLANDS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Our Team</p>
+        <h2 class="display">Local leadership. Proven experience.</h2>
+      </div>
+      <div class="team-grid">
+        <div class="tcard">
+          <img src="assets/team-lazarus-kenni.png" alt="Lazarus Kenni, Managing Director">
+          <div class="tc-body">
+            <h3>Lazarus Kenni</h3>
+            <p class="role">Managing Director</p>
+            <p>25+ years of leadership across energy, banking, communications and development in PNG and the Pacific. Expert in PPP advisory and stakeholder engagement.</p>
+          </div>
+        </div>
+        <div class="tcard">
+          <img src="assets/team-charity-sap.png" alt="Charity Sap, General Manager">
+          <div class="tc-body">
+            <h3>Charity Sap</h3>
+            <p class="role">General Manager</p>
+            <p>8+ years delivering rural electrification and solar projects impacting 100,000+ lives. Expert in sustainability, GEDSI and ISO management systems.</p>
+          </div>
+        </div>
+        <div class="tcard">
+          <img src="assets/team-napolean-sion.png" alt="Napolean Sion, Technical Manager">
+          <div class="tc-body">
+            <h3>Napolean Sion</h3>
+            <p class="role">Technical Manager</p>
+            <p>8+ years in solar PV, BESS and mini-grid installations. Trained under USAID-PEP and SEI with proven experience in complex solar deployments.</p>
+          </div>
+        </div>
+      </div>
+      <div class="eng-partner">
+        <strong>Our Strategic Engineering Partner — 360 Degrees Engineering Services:</strong> a 100% PNG-owned electrical engineering company specialising in engineering design, power systems analysis, construction supervision and certified electrical contracting. NEA and PNG Power Ltd certified.
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION + PARTNERS + PROFILE -->
   <section class="ops" id="operations">
     <div class="wrap ops-grid">
       <div>
         <div class="sec-head" style="margin-bottom:24px;">
           <p class="eyebrow">Where we operate</p>
-          <h2 class="display" style="font-size:clamp(1.6rem,3vw,2.2rem);">Three hubs. Nationwide reach.</h2>
+          <h2 class="display" style="font-size:clamp(1.6rem,3vw,2.2rem);">Port Moresby HQ. Nationwide delivery.</h2>
         </div>
-        <div class="loc">
-          <div class="row">
-            <span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#12130f" stroke-width="2.5"><path d="M12 21s7-5.8 7-11a7 7 0 1 0-14 0c0 5.2 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-            <div><h3>Port Moresby — Head Office</h3><p>Section 38 Allotment 24, Gordons, NCD. Warehousing, project team &amp; technical management.</p></div>
-          </div>
-          <div class="row">
-            <span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#12130f" stroke-width="2.5"><path d="M12 21s7-5.8 7-11a7 7 0 1 0-14 0c0 5.2 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-            <div><h3>Lae — Regional Branch</h3><p>Momase region installations, service and maintenance support.</p></div>
-          </div>
-          <div class="row">
-            <span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#12130f" stroke-width="2.5"><path d="M12 21s7-5.8 7-11a7 7 0 1 0-14 0c0 5.2 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-            <div><h3>Goroka — Regional Branch</h3><p>Highlands region installations, service and maintenance support.</p></div>
-          </div>
+        <div class="map-frame">
+          <iframe
+            title="PowerOn Ltd Head Office — Gordons, Port Moresby"
+            src="https://www.google.com/maps?q=-9.447327,147.185586&z=17&output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
         </div>
+        <p class="loc-note"><strong>Head Office:</strong> Section 38 Allotment 24, Gordons, Port Moresby, NCD. Supporting projects nationwide across Papua New Guinea through strong partnership and collaboration with local contractors.</p>
       </div>
       <div>
         <div class="sec-head" style="margin-bottom:24px;">
           <p class="eyebrow">Technology partners</p>
           <h2 class="display" style="font-size:clamp(1.6rem,3vw,2.2rem);">Tier-1 equipment only.</h2>
         </div>
-        <div class="partners">
-          <span class="chip">Verdisun Energy</span>
-          <span class="chip">Dyness Technology</span>
-          <span class="chip">Deye Technology</span>
-          <span class="chip">Omnivoltaic</span>
-          <span class="chip">Vortex Bladeless</span>
-          <span class="chip">Seneco Hydro</span>
+        <div class="partners logos">
+          <span class="pchip"><img src="assets/partner-solis-logo.png" alt="Solis"></span>
+          <span class="pchip"><img src="assets/partner-dyness-logo.png" alt="Dyness"></span>
+          <span class="pchip"><img src="assets/partner-kdm-logo.png" alt="Kingdom Solar"></span>
+          <span class="pchip"><img src="assets/partner-vg-solar-logo.png" alt="VG Solar"></span>
+          <span class="pchip"><img src="assets/partner-gcots-logo.png" alt="GCOTS Lighting"></span>
+          <span class="pchip"><img src="assets/partner-aurora-logo.png" alt="Aurora Lighting"></span>
+          <span class="pchip"><img src="assets/partner-deye-logo.png" onerror="this.onerror=null;this.src='https://www.deyeinverter.com/template/en/images/logo.png'" alt="Deye"></span>
+          <span class="pchip"><img src="assets/partner-omnivoltaic-logo.png" onerror="this.onerror=null;this.src='https://res.cloudinary.com/oves/image/upload/v1657359850/logos/oves_logo_words_h50_w3axpd.png'" alt="Omnivoltaic"></span>
         </div>
-        <p class="creds">
-          PNG-registered limited liability company<br>
-          IPA Registration # 1-144619447<br>
-          TIN # 502985302<br>
-          Compliant with PNG labour &amp; OHS standards
-        </p>
+        <div class="profile-box">
+          <h3>Company Profile</h3>
+          <p>Learn more about PowerOn's capabilities, experience and renewable energy solutions by viewing or downloading our Company Profile.</p>
+          <div class="btns">
+            <a class="btn small" href="assets/PowerOn_Ltd_Company_Profile.pdf" target="_blank" rel="noopener">View Profile</a>
+            <a class="btn small dark" href="assets/PowerOn_Ltd_Company_Profile.pdf" download>Download PDF</a>
+          </div>
+          <div class="qr-wrap">
+            <img src="assets/qr-company-profile.png" alt="QR code — scan to view Company Profile">
+            <span class="qr-hint">Scan to view<br>Company Profile<br>on your phone</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -445,9 +639,10 @@
       <div>
         <h2 class="display">Ready to power on?</h2>
         <p>Tell us about your site and what you want to run. Our team will assess it, design a compliant system, and give you a clear quote.</p>
-        <form class="qform" action="https://formsubmit.co/lazarus@poweron.com" method="POST">
+        <form class="qform" action="https://formsubmit.co/info@poweron.com.pg" method="POST">
           <input type="hidden" name="_subject" value="New quote request — poweron.com.pg">
           <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_cc" value="gm@poweron.com.pg">
           <div>
             <label for="qname">Your name</label>
             <input id="qname" type="text" name="name" required autocomplete="name">
@@ -459,7 +654,7 @@
           <div>
             <label for="qneed">What do you need?</label>
             <select id="qneed" name="service" required>
-              <option value="Solar home system">Solar home system</option>
+              <option value="Infrastructure / community solutions">Infrastructure &amp; community solutions</option>
               <option value="Institutional power">Institutional power (school / hospital / govt)</option>
               <option value="SME / tourism energy">SME / tourism energy</option>
               <option value="Backup / hybrid BESS">Backup / hybrid system (BESS)</option>
@@ -471,12 +666,13 @@
         </form>
       </div>
       <div class="contact-card">
-        <div class="row"><span class="k">Phone</span><a href="tel:+67571792734">+675 7179 2734</a></div>
-        <div class="row"><span class="k">Phone (alt)</span><a href="tel:+67576280878">+675 7628 0878</a></div>
-        <div class="row"><span class="k">Email</span><a href="mailto:lazarus@poweron.com">lazarus@poweron.com</a></div>
+        <div class="row"><span class="k">General Enquiry</span><a href="mailto:info@poweron.com.pg">info@poweron.com.pg</a></div>
+        <div class="row"><span class="k">Projects &amp; Business</span><a href="mailto:gm@poweron.com.pg">gm@poweron.com.pg</a></div>
         <div class="row"><span class="k">Head Office</span><span>Gordons, Port Moresby, NCD</span></div>
         <div class="row"><span class="k">Postal</span><span>P.O. Box 1962, Konedobu, Port Moresby</span></div>
+        <div class="row"><span class="k">Company Profile</span><span><a href="assets/PowerOn_Ltd_Company_Profile.pdf" target="_blank" rel="noopener">View</a> &nbsp;·&nbsp; <a href="assets/PowerOn_Ltd_Company_Profile.pdf" download>Download</a></span></div>
         <div class="row"><span class="k">Socials</span><span><a href="#" rel="noopener">Facebook</a> · <a href="#" rel="noopener">LinkedIn</a></span></div>
+
       </div>
     </div>
   </section>
@@ -485,7 +681,8 @@
 
 <footer>
   <div class="wrap foot">
-    <span>© 2026 PowerOn Ltd — Empowering PNG to Power our Future.</span>
+    <span>© 2026 PowerOn Ltd — Empowering PNG to Power Our Future.</span>
+    <a href="assets/PowerOn_Ltd_Company_Profile.pdf" target="_blank" rel="noopener">Company Profile</a>
     <span class="mono">poweron.com.pg</span>
   </div>
 </footer>
@@ -494,13 +691,14 @@
   const hero = document.getElementById('hero');
   const sw = document.getElementById('theSwitch');
   const state = document.getElementById('switchState');
+  const caption = document.getElementById('sceneCaption');
+  const battLevel = document.getElementById('battLevel');
 
-  // Build the solar cell grid (7 cols x 4 rows) with staggered light-up delays
   (function buildPanel(){
     const g = document.getElementById('panelCells');
     const cols = 7, rows = 4, w = 44, h = 50, gap = 4;
-    const glint = new Set([1,9,10,17,25]);   // teal shimmer cells
-    const hot = new Set([12,19]);            // gold "hot" cells
+    const glint = new Set([1,9,10,17,25]);
+    const hot = new Set([12,19]);
     let i = 0;
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
@@ -517,18 +715,24 @@
     }
   })();
 
-  function setLit(on){
+  function setDay(on){
     hero.classList.toggle('lit', on);
     sw.setAttribute('aria-pressed', String(on));
-    state.textContent = on ? 'ON' : 'OFF';
+    state.textContent = on ? 'DAY — SOLAR CHARGING' : 'NIGHT — ON BATTERY';
+    caption.textContent = on
+      ? 'Day: solar charging the battery for tonight'
+      : 'Night: battery backup keeps the lights on';
+    // battery fills by day, partially drained at night
+    battLevel.setAttribute('width', on ? 74 : 44);
+    battLevel.setAttribute('fill', on ? '#19a89d' : '#ffc400');
   }
 
-  sw.addEventListener('click', () => setLit(!hero.classList.contains('lit')));
+  sw.addEventListener('click', () => setDay(!hero.classList.contains('lit')));
 
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    setTimeout(() => setLit(true), 900);
+    setTimeout(() => setDay(true), 1100);
   } else {
-    setLit(true);
+    setDay(true);
   }
 
   // Active nav state
@@ -543,7 +747,7 @@
       if (link) link.classList.toggle('active', e.isIntersecting);
     });
   }, { rootMargin: '-40% 0px -50% 0px' });
-  ['services','process','why','operations','contact'].forEach(id => {
+  ['services','process','why','projects','team','operations','contact'].forEach(id => {
     const el = document.getElementById(id);
     if (el) obs.observe(el);
   });
